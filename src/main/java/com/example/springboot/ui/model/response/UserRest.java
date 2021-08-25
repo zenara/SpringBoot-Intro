@@ -2,6 +2,10 @@ package com.example.springboot.ui.model.response;
 
 public class UserRest {
     private String firstName;
+    private String lastName;
+    private String email;
+    private String userId;
+    
     public String getFirstName() {
         return firstName;
     }
@@ -26,7 +30,4 @@ public class UserRest {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    private String lastName;
-    private String email;
-    private String userId;
 }
