@@ -1,14 +1,13 @@
 package com.example.springboot.ui.controller;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
 import com.example.springboot.ui.model.request.UpdateUserDetailsRequestModel;
 import com.example.springboot.ui.model.request.UserDetailsRequestModel;
 import com.example.springboot.ui.model.response.UserRest;
+import com.example.springboot.userservice.impl.UserServiceImpl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,6 +42,8 @@ public class UserController {
     })
     public ResponseEntity<UserRest> getUser(@PathVariable String userId)
     {
+        // if(true) throw new UserServiceException("A User Service Exception is thrown");
+
         if(users.containsKey(userId)) {
             return new ResponseEntity<>(users.get(userId), HttpStatus.OK);
         } else {
@@ -60,17 +61,7 @@ public class UserController {
     })
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails)
     {
-        UserRest returnValue = new UserRest();
-        returnValue.setFirstName(userDetails.getFirstName());
-        returnValue.setLastName(userDetails.getLastName());
-        returnValue.setEmail(userDetails.getEmail());
-
-        String userId = UUID.randomUUID().toString();
-        returnValue.setUserId(userId);
-
-        if(users == null) users = new HashMap<>();
-        users.put(userId, returnValue);
-
+        UserRest returnValue = new UserServiceImpl().createUser(userDetails);
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
