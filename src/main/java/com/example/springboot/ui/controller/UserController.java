@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import com.example.springboot.ui.model.request.UpdateUserDetailsRequestModel;
 import com.example.springboot.ui.model.request.UserDetailsRequestModel;
 import com.example.springboot.ui.model.response.UserRest;
 
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users") // http:localhost:8080/users
 public class UserController {
 
-    Map<String, UserRest> users;
+    Map<String,UserRest> users;
 
     @GetMapping
     public String getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -47,7 +48,6 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
     }
 
     @PostMapping(produces = { 
@@ -74,10 +74,23 @@ public class UserController {
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
-    @PutMapping
-    public String updateUser()
+    @PutMapping(path="/{userId}", produces = { 
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_XML_VALUE
+    },
+    consumes = {
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_XML_VALUE
+    })
+    public UserRest updateUser(@PathVariable String userId, @Valid @RequestBody UpdateUserDetailsRequestModel uModel)
     {
-        return "update user was called";
+        UserRest storedUserDetails = users.get(userId);
+        storedUserDetails.setFirstName(uModel.getFirstName());
+        storedUserDetails.setLastName(uModel.getLastName());
+
+        users.put(userId, storedUserDetails);
+
+        return storedUserDetails;
     }
 
     @DeleteMapping
