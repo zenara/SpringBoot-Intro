@@ -8,6 +8,9 @@ import com.example.springboot.ui.model.request.UserDetailsRequestModel;
 import com.example.springboot.ui.model.response.UserRest;
 import com.example.springboot.userservice.UserService;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class UserServiceImpl implements UserService{
 
     Map<String,UserRest> users;
