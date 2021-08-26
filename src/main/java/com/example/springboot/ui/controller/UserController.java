@@ -8,7 +8,6 @@ import com.example.springboot.ui.model.request.UpdateUserDetailsRequestModel;
 import com.example.springboot.ui.model.request.UserDetailsRequestModel;
 import com.example.springboot.ui.model.response.UserRest;
 import com.example.springboot.userservice.UserService;
-import com.example.springboot.userservice.impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
